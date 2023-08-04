@@ -20,7 +20,7 @@ public class SneakerModelTrait {
     @JoinColumn(name = "model_id", nullable = false)
     private Sneaker model;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "trait_id", nullable = false)
     private SneakerTrait trait;
 

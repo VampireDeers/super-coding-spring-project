@@ -10,7 +10,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SneakerRepository extends JpaRepository<Sneaker, Integer> {
 
-    @Query(value = "SELECT DISTINCT s FROM Sneaker s JOIN FETCH s.sneakerModelTraits sn JOIN FETCH sn.trait",
-            countQuery = "SELECT count(s) FROM Sneaker s")
-    Page<Sneaker> findAllFetchJoin(Pageable pageable);
 }
