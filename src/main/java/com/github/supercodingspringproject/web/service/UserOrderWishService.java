@@ -1,5 +1,7 @@
 package com.github.supercodingspringproject.web.service;
 
+import com.github.supercodingspringproject.repository.generalUser.GeneralUser;
+import com.github.supercodingspringproject.repository.generalUser.GeneralUserRepository;
 import com.github.supercodingspringproject.repository.orders.Order;
 import com.github.supercodingspringproject.repository.orders.OrderRepository;
 import com.github.supercodingspringproject.repository.orders.OrderStatus;
@@ -7,9 +9,12 @@ import com.github.supercodingspringproject.repository.sneaker.Sneaker;
 import com.github.supercodingspringproject.repository.sneaker.SneakerRepository;
 import com.github.supercodingspringproject.repository.user.User;
 import com.github.supercodingspringproject.repository.user.UserRepository;
+import com.github.supercodingspringproject.repository.wish.Wish;
+import com.github.supercodingspringproject.repository.wish.WishRepository;
 import com.github.supercodingspringproject.service.exceptions.NotAcceptException;
 import com.github.supercodingspringproject.service.exceptions.NotFoundException;
 import com.github.supercodingspringproject.web.dto.OrderRequest;
+import com.github.supercodingspringproject.web.dto.WishRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +29,8 @@ public class UserOrderWishService {
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
     private final SneakerRepository sneakerRepository;
+    private final GeneralUserRepository generalUserRepository;
+    private final WishRepository wishRepository;
 
     @Transactional(transactionManager = "tmJpa")
     public Double makeOrder(OrderRequest orderRequest) {
@@ -54,5 +61,25 @@ public class UserOrderWishService {
 
         Order orderSaved = orderRepository.save(orderNew);
         return orderSaved.getTotalPrice();
+    }
+    @Transactional(transactionManager = "tmJpa")
+    public Boolean makeWish(WishRequest wishRequest) {
+        Integer modelId = wishRequest.getModelId();
+        Integer userId = wishRequest.getUserId();
+        Integer sneakerSize = wishRequest.getSneakerSize();
+
+        Sneaker sneaker = sneakerRepository.findById(modelId).orElseThrow(() -> new NotFoundException("modelId '" + modelId + "' 를 찾을 수 없습니다."));
+        GeneralUser user = generalUserRepository.findGeneralUserByUserId(userId).orElseThrow(() -> new NotFoundException("userId '" + userId + "' 에 해당하는 일반유저 찾을 수 없습니다."));
+
+        Wish wishNew = Wish.builder()
+                .gUser(user)
+                .model(sneaker)
+                .sneakerSize(sneakerSize)
+                .wishAt(LocalDateTime.now())
+                           .build();
+
+        Wish wish = wishRepository.save(wishNew);
+
+        return wish.getId() != null;
     }
 }
