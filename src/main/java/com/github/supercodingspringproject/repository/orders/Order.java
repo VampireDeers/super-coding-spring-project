@@ -22,7 +22,7 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "g_user_id", nullable = false)
-    private GeneralUser gUser;
+    private GeneralUser generalUser;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "model_id", nullable = false)
