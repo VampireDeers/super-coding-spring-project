@@ -1,6 +1,6 @@
 -- 아래 테이블이 수정되었습니다.
 CREATE TABLE wish(
-	wish_id INT PRIMARY KEY,
+	wish_id INT AUTO_INCREMENT PRIMARY KEY,
     g_user_id INT NOT NULL,
     model_id INT NOT NULL,
     sneaker_size INT CHECK ( sneaker_size >= 100 ),
@@ -13,7 +13,7 @@ CREATE TABLE wish(
 
 -- 아래 테이블이 수정되었습니다.
 CREATE TABLE orders(
-	  order_id INT PRIMARY KEY,
+	  order_id INT AUTO_INCREMENT  PRIMARY KEY,
     g_user_id INT NOT NULL,
     model_id INT NOT NULL,
     sneaker_size INT NOT NULL,
