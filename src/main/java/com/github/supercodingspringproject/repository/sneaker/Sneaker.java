@@ -4,6 +4,7 @@ import com.github.supercodingspringproject.repository.inventory.AbraodInventory;
 import com.github.supercodingspringproject.repository.inventory.KoreaInventory;
 import com.github.supercodingspringproject.repository.sneakerModelTraits.SneakerModelTrait;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "sneaker")
 public class Sneaker {
@@ -29,7 +31,7 @@ public class Sneaker {
     @OneToMany(mappedBy = "model")
     private Set<KoreaInventory> koreaInventories = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "model")
+    @OneToMany(mappedBy = "model", fetch = FetchType.EAGER)
     private Set<SneakerModelTrait> sneakerModelTraits = new LinkedHashSet<>();
 
 }
