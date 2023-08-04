@@ -1,5 +1,6 @@
 package com.github.supercodingspringproject.web.advice;
 
+import com.github.supercodingspringproject.service.exceptions.NotAcceptException;
 import com.github.supercodingspringproject.service.exceptions.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,13 @@ public class ExceptionControllerAdvice {
     public String handleNotFoundException(NotFoundException nfe){
         log.error("Client 요청이후 DB 검색 중 에러로 다음처럼 출력합니다. " + nfe.getMessage());
         return nfe.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+    @ExceptionHandler(NotAcceptException.class)
+    public String handleNotAcceptException(NotAcceptException nae){
+        log.error("Client 요청이 모종의 이유로 거부됩니다. " + nae.getMessage());
+        return nae.getMessage();
     }
 
 }

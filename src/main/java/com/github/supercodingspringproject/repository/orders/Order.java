@@ -2,19 +2,22 @@ package com.github.supercodingspringproject.repository.orders;
 
 import com.github.supercodingspringproject.repository.sneaker.Sneaker;
 import com.github.supercodingspringproject.repository.generalUser.GeneralUser;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "orders")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Order {
     @Id
-    @Column(name = "order_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_id")
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -38,9 +41,10 @@ public class Order {
     private Double totalPrice;
 
     @Column(name = "order_status")
-    private Byte orderStatus;
+    @Enumerated(EnumType.ORDINAL)
+    private OrderStatus orderStatus;
 
     @Column(name = "order_at", nullable = false)
-    private Instant orderAt;
+    private LocalDateTime orderAt;
 
 }
