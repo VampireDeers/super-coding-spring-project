@@ -1,5 +1,6 @@
 package com.github.supercodingspringproject.web.advice;
 
+import com.github.supercodingspringproject.service.exceptions.InvalidValueException;
 import com.github.supercodingspringproject.service.exceptions.NotAcceptException;
 import com.github.supercodingspringproject.service.exceptions.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,13 @@ public class ExceptionControllerAdvice {
     public String handleNotAcceptException(NotAcceptException nae){
         log.error("Client 요청이 모종의 이유로 거부됩니다. " + nae.getMessage());
         return nae.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InvalidValueException.class)
+    public String handleInvalidValueException(InvalidValueException ive){
+        log.error("Client 요청에 문제가 있어 다음처럼 출력합니다. " + ive.getMessage());
+        return ive.getMessage();
     }
 
 }

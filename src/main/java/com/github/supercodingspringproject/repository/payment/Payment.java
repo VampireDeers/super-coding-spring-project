@@ -2,15 +2,18 @@ package com.github.supercodingspringproject.repository.payment;
 
 import com.github.supercodingspringproject.repository.generalUser.GeneralUser;
 import com.github.supercodingspringproject.repository.orders.Order;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "payment")
 public class Payment {
     @Id
@@ -27,9 +30,10 @@ public class Payment {
     private Order order;
 
     @Column(name = "type", nullable = false)
-    private Byte type;
+    @Enumerated(EnumType.ORDINAL)
+    private PaymentType type;
 
     @Column(name = "payment_at", nullable = false)
-    private Instant paymentAt;
+    private LocalDateTime paymentAt;
 
 }

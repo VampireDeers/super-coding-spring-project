@@ -52,7 +52,7 @@ public class UserOrderWishService {
                     .sneakerSize(sneakerSize)
                     .orderQuantity(orderQuantity)
                     .shppingAddress(shippingAddress)
-                    .gUser(user.getGeneralUsers())
+                    .generalUser(user.getGeneralUsers())
                     .totalPrice(totalPrice)
                     .orderStatus(OrderStatus.ORDER_COMPLETED)
                     .orderAt(LocalDateTime.now())
